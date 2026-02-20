@@ -4,19 +4,37 @@
 
 @using PjrProject.Models
 
-<h2>🔧 Órdenes de Mantenimiento</h2>
-
-<div class="form-container">
-    <input @bind="nuevaDescripcion" placeholder="Descripción" />
-    <input @bind="nuevoResponsable" placeholder="Responsable" />
-    <button @onclick="AgregarOrden">Agregar</button>
+<div class="page-header">
+    <h2>Órdenes de Mantenimiento</h2>
 </div>
 
-@if (!string.IsNullOrEmpty(mensaje))
-{
-    <p class="mensaje">@mensaje</p>
-}
+<div class="layout-container">
 
+
+<section class="form-section">
+     <div class="form-container">
+        <div id="inputsOrden">
+
+                <div class="input-flotante">
+                    <input @bind="nuevaDescripcion" required />
+                    <label>Descripción</label>
+                </div>
+
+                <div class="input-flotante">
+                    <input @bind="nuevoResponsable" required />
+                    <label>Responsable</label>
+                </div>
+
+                <button class="btn-pro" @onclick="AgregarOrden">
+                    <span>Agregar Orden</span>
+                </button>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="table-section">
 <table>
     <thead>
         <tr>
@@ -36,6 +54,14 @@
         }
     </tbody>
 </table>
+</section>
+
+</div>
+
+@if (!string.IsNullOrEmpty(mensaje))
+{
+    <p class="mensaje">@mensaje</p>
+}
 
 @code {
     private string nuevaDescripcion = "";
