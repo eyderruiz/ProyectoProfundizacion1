@@ -1,23 +1,148 @@
 ﻿@page "/"
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gestión de Unidad</title>
-</head>
-<body>
+@rendermode InteractiveServer
 
-  <!-- ===== BANNER SUPERIOR ===== -->
-  <header id="banner">
-    <div id="banner-title">
-      <h1>Gestión de Unidad</h1>
+<PageTitle>Iniciar Sesión</PageTitle>
+
+<div class="login-wrapper">
+    <div class="login-card">
+
+        <div class="login-header">
+            <h2>Gestión de Unidad</h2>
+            <p>Ingresa tus credenciales para continuar</p>
+        </div>
+
+        <div class="login-body">
+
+            <div class="campo">
+                <label>Usuario</label>
+                <input type="text" placeholder="Ingresa tu usuario" @bind="usuario" />
+            </div>
+
+            <div class="campo">
+                <label>Contraseña</label>
+                <input type="password" placeholder="Ingresa tu contraseña" @bind="contrasena" />
+            </div>
+
+            @if (!string.IsNullOrEmpty(mensajeError))
+            {
+                <div class="error">@mensajeError</div>
+            }
+
+            <button class="btn-login" @onclick="Ingresar">Iniciar Sesión</button>
+
+        </div>
     </div>
-    <div id="banner-login">
-      <input type="text" placeholder="Usuario" id="input-usuario" />
-      <input type="password" placeholder="Contraseña" id="input-pass" />
-      <button id="btn-login">Iniciar Sesion</button>
-    </div>
-  </header>
-</body>
-</html>
+</div>
+
+<style>
+    .login-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f0f2f5;
+    }
+
+    .login-card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+        padding: 40px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    .login-icon {
+        font-size: 48px;
+    }
+
+    .login-header h2 {
+        margin-top: 12px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #1a1a2e;
+    }
+
+    .login-header p {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .login-body {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .campo {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+        .campo label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .campo input {
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+            .campo input:focus {
+                border-color: #255865;
+            }
+
+    .btn-login {
+        background-color: #237e90;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+        .btn-login:hover {
+            background-color: #44becc;
+        }
+
+    .error {
+        background: #ffe0e0;
+        color: #c0392b;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 13px;
+    }
+</style>
+
+@code {
+    private string? usuario;
+    private string? contrasena;
+    private string mensajeError = string.Empty;
+
+    private void Ingresar()
+    {
+        if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(contrasena))
+        {
+            mensajeError = "Por favor completa todos los campos.";
+            return;
+        }
+
+        mensajeError = string.Empty;
+        Console.WriteLine($"Usuario: {usuario}");
+    }
+}
