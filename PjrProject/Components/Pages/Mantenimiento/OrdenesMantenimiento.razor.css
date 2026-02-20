@@ -37,52 +37,127 @@ h2 {
         border-color: #237e90;
     }
 
-    /* ===============================
-   ✏ INPUTS
+/* ===============================
+   ✨ INPUTS FLOTANTES MODERNOS
 ================================= */
-    .form-container input {
+
+/* ===============================
+   ✨ INPUTS FLOTANTES MODERNOS PRO
+================================= */
+
+#inputsOrden {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+}
+
+/* Contenedor relativo */
+.input-flotante {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+    /* Input */
+    .input-flotante input {
         width: 100%;
-        padding: 10px 12px;
-        margin-bottom: 12px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        transition: all 0.2s ease;
+        padding: 15px 14px;
+        font-size: 16px; /* 🔥 un poco más grande */
+        font-weight: 500; /* 🔥 más presencia */
+        border: 2px solid #b4e9ed;
+        border-radius: 12px;
+        outline: none;
+        background-color: #f3fbfc;
+        color: #1e5f6e; /* 🔥 más contraste */
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-        .form-container input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(68, 190, 204, 0.2);
+        /* Foco */
+        .input-flotante input:focus {
+            border-color: #28a2b2;
+            box-shadow: 0 0 0 3px rgba(40, 162, 178, 0.25);
         }
+
+    /* Label */
+    .input-flotante label {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #237e90;
+        font-size: 15px; /* 🔥 más grande */
+        font-weight: 600; /* 🔥 más marcada */
+        letter-spacing: 0.3px; /* 🔥 toque moderno */
+        pointer-events: none;
+        background: #f3fbfc;
+        padding: 0 6px;
+        transition: all 0.3s ease;
+    }
+
+    /* Animación flotante */
+    .input-flotante input:focus + label,
+    .input-flotante input:valid + label {
+        top: -9px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #28a2b2;
+    }
 
 
     /* ===============================
    🔘 BOTONES
 ================================= */
-    .form-container button {
+.btn-pro {
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+    padding: 14px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #237e90, #28a2b2);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 20px rgba(35, 126, 144, 0.35);
+}
+
+    /* ✨ brillo animado */
+    .btn-pro::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
         width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        background-color: #237e90;
-        color: white;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        cursor: pointer;
-        transition: all 0.2s ease;
+        height: 100%;
+        background: linear-gradient( 120deg, transparent, rgba(255, 255, 255, 0.4), transparent );
+        transition: left 0.6s ease;
     }
 
-        /* Hover */
-        .form-container button:hover {
-            background-color: #1b6573;
-            transform: translateY(-1px);
+    /* Hover */
+    .btn-pro:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(35, 126, 144, 0.45);
+    }
+
+        .btn-pro:hover::before {
+            left: 100%;
         }
 
-        /* Click */
-        .form-container button:active {
-            transform: translateY(0px);
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.2);
-        }
+    /* Click */
+    .btn-pro:active {
+        transform: scale(0.96);
+        box-shadow: 0 6px 14px rgba(20, 80, 90, 0.4);
+    }
+
+    /* Texto encima del brillo */
+    .btn-pro span {
+        position: relative;
+        z-index: 1;
+    }
 
 
 /* ===============================
@@ -171,3 +246,33 @@ tr:hover {
         letter-spacing: 0.5px;
         box-shadow: 0 4px 10px rgba(40, 162, 178, 0.15);
     }
+
+/* ===============================
+   MENSAJE DINÁMICO PRO
+================================= */
+
+.mensaje {
+    margin-top: 20px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 14px;
+    background: #b4e9ed;
+    color: #0f4f59;
+    border-left: 4px solid #28a2b2;
+    animation: fadeInUp 0.4s ease;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* Animación */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
