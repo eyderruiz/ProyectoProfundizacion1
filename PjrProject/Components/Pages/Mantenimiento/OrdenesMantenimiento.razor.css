@@ -1,49 +1,173 @@
-﻿h2 {
-    margin-bottom: 20px;
+﻿/* ===============================
+   🎨 VARIABLES DE COLOR
+================================= */
+:root {
+    --primary: #44becc;
+    --primary-dark: #237e90;
+    --border-light: #e0e0e0;
+    --text-dark: #333;
 }
 
+
+/* ===============================
+   🏷 TITULOS
+================================= */
+h2 {
+    margin-bottom: 20px;
+    color: var(--text-dark);
+}
+
+
+/* ===============================
+   🧾 FORMULARIO - TARJETA
+================================= */
 .form-container {
-    margin-bottom: 20px;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 2px solid white; /* estado normal */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+    max-width: 500px;
+    transition: all 0.2s ease;
 }
 
+    /* 👇 SOLO mientras mantienes presionado el click */
+    .form-container:hover {
+        border-color: #237e90;
+    }
+
+    /* ===============================
+   ✏ INPUTS
+================================= */
     .form-container input {
-        padding: 8px;
-        margin-right: 10px;
-        border-radius: 6px;
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        border-radius: 8px;
         border: 1px solid #ccc;
+        transition: all 0.2s ease;
     }
 
-    .form-container button {
-        padding: 8px 15px;
-        border: none;
-        background-color: #237e90;
-        color: white;
-        border-radius: 6px;
-        cursor: pointer;
-    }
-
-        .form-container button:hover {
-            background-color: #44becc;
+        .form-container input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(68, 190, 204, 0.2);
         }
 
+
+    /* ===============================
+   🔘 BOTONES
+================================= */
+    .form-container button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background-color: #237e90;
+        color: white;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+        /* Hover */
+        .form-container button:hover {
+            background-color: #1b6573;
+            transform: translateY(-1px);
+        }
+
+        /* Click */
+        .form-container button:active {
+            transform: translateY(0px);
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+
+/* ===============================
+   ✅ MENSAJES
+================================= */
 .mensaje {
     color: green;
     font-weight: bold;
     margin-bottom: 15px;
 }
 
+
+/* ===============================
+   📊 TABLA
+================================= */
+
 table {
     width: 100%;
     border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    border: 2px solid #246a7a; /* borde exterior más fino */
+    font-size: 14px; /* 👈 texto más compacto */
 }
 
+/* Encabezado */
 th {
-    background-color: #237e90;
-    color: white;
-    padding: 10px;
+    background-color: #b4e9ed;
+    color: #246a7a;
+    padding: 8px 10px; /* 👈 menos alto */
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #246a7a;
 }
 
+/* Celdas */
 td {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+    padding: 6px 10px; /* 👈 compacto */
+    border-bottom: 1px solid #e6f4f6;
+    color: #333;
 }
+
+/* Hover */
+tr:hover {
+    background-color: rgba(36, 106, 122, 0.06);
+}
+
+
+/* ===============================
+   🏷 layout 
+================================= */
+.layout-container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    margin-top: 30px; /* 👈 separación del título */
+}
+
+.form-section {
+    flex: 1; /* ocupa menos espacio */
+    max-width: 400px;
+}
+
+.table-section {
+    flex: 2; /* tabla más grande */
+}
+
+/* ===============================
+   🏷 HEADER MODERNO
+================================= */
+
+.page-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+    .page-header h2 {
+        display: inline-block;
+        padding: 10px 25px;
+        background: #b4e9ed;
+        color: #246a7a;
+        border-radius: 30px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 10px rgba(40, 162, 178, 0.15);
+    }
