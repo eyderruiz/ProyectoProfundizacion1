@@ -1,0 +1,97 @@
+﻿@page "/ordenes"
+@layout PjrProject.Components.Layout.MainLayout
+@rendermode InteractiveServer
+
+@using PjrProject.Models
+
+<div class="page-header">
+    <h2>Órdenes de Mantenimiento</h2>
+</div>
+
+<div class="layout-container">
+
+
+<section class="form-section">
+     <div class="form-container">
+        <div id="inputsOrden">
+
+                <div class="input-flotante">
+                    <input @bind="nuevaDescripcion" required />
+                    <label>Descripción</label>
+                </div>
+
+                <div class="input-flotante">
+                    <input @bind="nuevoResponsable" required />
+                    <label>Responsable</label>
+                </div>
+
+                <button class="btn-pro" @onclick="AgregarOrden">
+                    <span>Agregar Orden</span>
+                </button>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="table-section">
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Responsable</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orden in ordenes)
+        {
+            <tr>
+                <td>@orden.Id</td>
+                <td>@orden.Descripcion</td>
+                <td>@orden.Responsable</td>
+            </tr>
+        }
+    </tbody>
+</table>
+</section>
+
+</div>
+
+@if (!string.IsNullOrEmpty(mensaje))
+{
+    <p class="mensaje">@mensaje</p>
+}
+
+@code {
+    private string nuevaDescripcion = "";
+    private string nuevoResponsable = "";
+    private string mensaje = "";
+
+    private List<Orden> ordenes = new()
+    {
+        new Orden { Id = 1, Descripcion = "Cambio de aceite", Responsable = "Carlos" },
+        new Orden { Id = 2, Descripcion = "Revisión eléctrica", Responsable = "Ana" }
+    };
+
+    private void AgregarOrden()
+    {
+        if (string.IsNullOrWhiteSpace(nuevaDescripcion) ||
+            string.IsNullOrWhiteSpace(nuevoResponsable))
+        {
+            mensaje = "Todos los campos son obligatorios.";
+            return;
+        }
+
+        ordenes.Add(new Orden
+        {
+            Id = ordenes.Count + 1,
+            Descripcion = nuevaDescripcion,
+            Responsable = nuevoResponsable
+        });
+
+        mensaje = "Orden agregada correctamente.";
+        nuevaDescripcion = "";
+        nuevoResponsable = "";
+    }
+}
