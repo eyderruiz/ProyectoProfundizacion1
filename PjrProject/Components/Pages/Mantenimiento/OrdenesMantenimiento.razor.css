@@ -1,0 +1,49 @@
+﻿h2 {
+    margin-bottom: 20px;
+}
+
+.form-container {
+    margin-bottom: 20px;
+}
+
+    .form-container input {
+        padding: 8px;
+        margin-right: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .form-container button {
+        padding: 8px 15px;
+        border: none;
+        background-color: #237e90;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+        .form-container button:hover {
+            background-color: #44becc;
+        }
+
+.mensaje {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #237e90;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
