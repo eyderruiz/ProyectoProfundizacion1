@@ -1,0 +1,15 @@
+﻿.layout-container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    margin-top: 30px;
+}
+
+::deep .form-section {
+    flex: 0 0 380px;
+}
+
+::deep .table-section {
+    flex: 1;
+    min-width: 0;
+}

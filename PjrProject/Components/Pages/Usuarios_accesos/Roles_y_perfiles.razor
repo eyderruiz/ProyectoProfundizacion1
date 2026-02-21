@@ -1,0 +1,106 @@
+﻿@page "/roles_y_perfiles"
+@layout PjrProject.Components.Layout.MainLayout
+@rendermode InteractiveServer
+
+<H2Pro Centrado="true" Texto="Roles y Perfiles" />
+
+<Layout_container>
+    <!-- ================= FORM ================= -->
+    <section class="form-section">
+
+        <FormContainer>
+
+            <InputFlotante Label="Nombre del Rol"
+                           @bind-Valor="nuevoNombreRol" />
+
+            <InputFlotante Label="Descripción"
+                           @bind-Valor="nuevaDescripcion" />
+
+            <InputFlotante Label="Nivel de Acceso"
+                           @bind-Valor="nuevoNivelAcceso" />
+
+            <BotonPro Texto="Agregar Rol"
+                      OnClick="AgregarRol" />
+
+        </FormContainer>
+
+    </section>
+
+    <!-- ================= TABLE ================= -->
+    <section class="table-section">
+
+        <TablaPro>
+            <Header>
+            <tr>
+                <th>ID</th>
+                <th>Nombre Rol</th>
+                <th>Descripción</th>
+                <th>Nivel Acceso</th>
+            </tr>
+            </Header>
+
+            <Body>
+                @foreach (var rol in roles)
+                {
+                <tr>
+                    <td>@rol.Id</td>
+                    <td>@rol.NombreRol</td>
+                    <td>@rol.Descripcion</td>
+                    <td>@rol.NivelAcceso</td>
+                </tr>
+            }
+            </Body>
+        </TablaPro>
+
+    </section>
+
+</Layout_container>
+
+<!-- ================= MENSAJE ================= -->
+<MensajePro Texto="@mensaje" />
+
+@code {
+    private string nuevoNombreRol = "";
+    private string nuevaDescripcion = "";
+    private string nuevoNivelAcceso = "";
+    private string mensaje = "";
+
+    // Clase interna
+    private class RolPerfil
+    {
+        public int Id { get; set; }
+        public string NombreRol { get; set; } = "";
+        public string Descripcion { get; set; } = "";
+        public string NivelAcceso { get; set; } = "";
+    }
+
+    private List<RolPerfil> roles = new()
+    {
+        new RolPerfil { Id = 1, NombreRol = "Administrador", Descripcion = "Acceso total al sistema", NivelAcceso = "Alto" },
+        new RolPerfil { Id = 2, NombreRol = "Vigilante", Descripcion = "Acceso a módulos de vigilancia", NivelAcceso = "Medio" }
+    };
+
+    private void AgregarRol()
+    {
+        if (string.IsNullOrWhiteSpace(nuevoNombreRol) ||
+            string.IsNullOrWhiteSpace(nuevaDescripcion) ||
+            string.IsNullOrWhiteSpace(nuevoNivelAcceso))
+        {
+            mensaje = "Todos los campos son obligatorios.";
+            return;
+        }
+
+        roles.Add(new RolPerfil
+        {
+            Id = roles.Count + 1,
+            NombreRol = nuevoNombreRol,
+            Descripcion = nuevaDescripcion,
+            NivelAcceso = nuevoNivelAcceso
+        });
+
+        mensaje = "Rol agregado correctamente.";
+        nuevoNombreRol = "";
+        nuevaDescripcion = "";
+        nuevoNivelAcceso = "";
+    }
+}

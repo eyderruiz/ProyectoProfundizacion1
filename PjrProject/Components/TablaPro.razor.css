@@ -1,0 +1,38 @@
+﻿.tabla-wrapper {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid white; /* estado normal */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+
+/* 👇 SOLO mientras mantienes presionado el click */
+    .tabla-wrapper:hover {
+        border-color: #237e90;
+    }
+.tabla-pro {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 14px;
+}
+
+    /* 👇 CLAVE */
+    .tabla-pro ::deep th {
+        background-color: #b4e9ed;
+        color: #246a7a;
+        padding: 8px 10px; /* 👈 menos alto */
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid #246a7a;
+    }
+
+    .tabla-pro ::deep td {
+        padding: 6px 10px; /* 👈 compacto */
+        border-bottom: 1px solid #e6f4f6;
+        color: #333;
+    }
+
+    .tabla-pro ::deep tbody tr:hover {
+        background-color: rgba(36, 106, 122, 0.06);
+    }

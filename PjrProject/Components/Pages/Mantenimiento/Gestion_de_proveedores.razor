@@ -1,0 +1,106 @@
+﻿@page "/gestion_proveedores"
+@layout PjrProject.Components.Layout.MainLayout
+@rendermode InteractiveServer
+
+<H2Pro Centrado="true" Texto="Gestión de Proveedores" />
+
+<Layout_container>
+    <!-- ================= FORM ================= -->
+    <section class="form-section">
+
+        <FormContainer>
+
+            <InputFlotante Label="Nombre"
+                           @bind-Valor="nuevoNombre" />
+
+            <InputFlotante Label="Teléfono"
+                           @bind-Valor="nuevoTelefono" />
+
+            <InputFlotante Label="Email"
+                           @bind-Valor="nuevoEmail" />
+
+            <BotonPro Texto="Agregar Proveedor"
+                      OnClick="AgregarProveedor" />
+
+        </FormContainer>
+
+    </section>
+
+    <!-- ================= TABLE ================= -->
+    <section class="table-section">
+
+        <TablaPro>
+            <Header>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+            </tr>
+            </Header>
+
+            <Body>
+                @foreach (var proveedor in proveedores)
+                {
+                <tr>
+                    <td>@proveedor.Id</td>
+                    <td>@proveedor.Nombre</td>
+                    <td>@proveedor.Telefono</td>
+                    <td>@proveedor.Email</td>
+                </tr>
+            }
+            </Body>
+        </TablaPro>
+
+    </section>
+
+</Layout_container>
+
+<!-- ================= MENSAJE ================= -->
+<MensajePro Texto="@mensaje" />
+
+@code {
+    private string nuevoNombre = "";
+    private string nuevoTelefono = "";
+    private string nuevoEmail = "";
+    private string mensaje = "";
+
+    // Clase interna
+    private class Proveedor
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; } = "";
+        public string Telefono { get; set; } = "";
+        public string Email { get; set; } = "";
+    }
+
+    private List<Proveedor> proveedores = new()
+    {
+        new Proveedor { Id = 1, Nombre = "Repuestos Industriales S.A.", Telefono = "3001234567", Email = "contacto@repuestos.com" },
+        new Proveedor { Id = 2, Nombre = "Servicios Técnicos López", Telefono = "3119876543", Email = "info@stlopez.com" }
+    };
+
+    private void AgregarProveedor()
+    {
+        if (string.IsNullOrWhiteSpace(nuevoNombre) ||
+            string.IsNullOrWhiteSpace(nuevoTelefono) ||
+            string.IsNullOrWhiteSpace(nuevoEmail))
+        {
+            mensaje = "Todos los campos son obligatorios.";
+            return;
+        }
+
+        proveedores.Add(new Proveedor
+        {
+            Id = proveedores.Count + 1,
+            Nombre = nuevoNombre,
+            Telefono = nuevoTelefono,
+            Email = nuevoEmail
+        });
+
+        mensaje = "Proveedor agregado correctamente.";
+        nuevoNombre = "";
+        nuevoTelefono = "";
+        nuevoEmail = "";
+    }
+}

@@ -1,0 +1,96 @@
+﻿@page "/tipos_mantenimiento"
+@layout PjrProject.Components.Layout.MainLayout
+@rendermode InteractiveServer
+
+<H2Pro Centrado="true" Texto="Tipos mantenimiento" />
+
+<Layout_container>
+    <!-- ================= FORM ================= -->
+    <section class="form-section">
+
+        <FormContainer>
+
+            <InputFlotante Label="Nombre"
+                           @bind-Valor="nuevoNombre" />
+
+            <InputFlotante Label="Descripción"
+                           @bind-Valor="nuevaDescripcion" />
+
+            <BotonPro Texto="Agregar Tipo"
+                      OnClick="AgregarTipo" />
+
+        </FormContainer>
+
+    </section>
+
+    <!-- ================= TABLE ================= -->
+    <section class="table-section">
+
+        <TablaPro>
+            <Header>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+            </tr>
+            </Header>
+
+            <Body>
+                @foreach (var tipo in tiposMantenimiento)
+                {
+                <tr>
+                    <td>@tipo.Id</td>
+                    <td>@tipo.Nombre</td>
+                    <td>@tipo.Descripcion</td>
+                </tr>
+            }
+            </Body>
+        </TablaPro>
+
+    </section>
+
+</Layout_container>
+
+<!-- ================= MENSAJE ================= -->
+<MensajePro Texto="@mensaje" />
+
+@code {
+    private string nuevoNombre = "";
+    private string nuevaDescripcion = "";
+    private string mensaje = "";
+
+    // Clase interna (NO modelo externo)
+    private class TipoMantenimiento
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; } = "";
+        public string Descripcion { get; set; } = "";
+    }
+
+    private List<TipoMantenimiento> tiposMantenimiento = new()
+    {
+        new TipoMantenimiento { Id = 1, Nombre = "Preventivo", Descripcion = "Mantenimiento programado periódico" },
+        new TipoMantenimiento { Id = 2, Nombre = "Correctivo", Descripcion = "Reparación después de una falla" }
+    };
+
+    private void AgregarTipo()
+    {
+        if (string.IsNullOrWhiteSpace(nuevoNombre) ||
+            string.IsNullOrWhiteSpace(nuevaDescripcion))
+        {
+            mensaje = "Todos los campos son obligatorios.";
+            return;
+        }
+
+        tiposMantenimiento.Add(new TipoMantenimiento
+        {
+            Id = tiposMantenimiento.Count + 1,
+            Nombre = nuevoNombre,
+            Descripcion = nuevaDescripcion
+        });
+
+        mensaje = "Tipo agregado correctamente.";
+        nuevoNombre = "";
+        nuevaDescripcion = "";
+    }
+}

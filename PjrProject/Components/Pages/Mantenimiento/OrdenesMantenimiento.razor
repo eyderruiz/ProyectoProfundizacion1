@@ -35,25 +35,30 @@
 
 
 <section class="table-section">
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Descripción</th>
-            <th>Responsable</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var orden in ordenes)
-        {
-            <tr>
-                <td>@orden.Id</td>
-                <td>@orden.Descripcion</td>
-                <td>@orden.Responsable</td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+
+            <TablaPro>
+                <Header>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Responsable</th>
+                </tr>
+                </Header>
+
+                <Body>
+                    @foreach (var orden in ordenes)
+                    {
+                    <tr>
+                        <td>@orden.Id</td>
+                        <td>@orden.Descripcion</td>
+                        <td>@orden.Responsable</td>
+                    </tr>
+                }
+                </Body>
+            </TablaPro>
+
+
 </section>
 
 </div>

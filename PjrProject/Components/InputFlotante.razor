@@ -1,0 +1,13 @@
+﻿<div class="input-flotante">
+    <input @bind="Valor"
+           type="@Tipo"
+           required />
+    <label>@Label</label>
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public string Tipo { get; set; } = "text";
+    [Parameter] public string Valor { get; set; } = "";
+    [Parameter] public EventCallback<string> ValorChanged { get; set; }
+}
