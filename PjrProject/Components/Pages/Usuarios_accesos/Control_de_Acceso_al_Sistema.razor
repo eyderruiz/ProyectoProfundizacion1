@@ -1,5 +1,106 @@
-﻿<h3>Control_de_Acceso_al_Sistema</h3>
+﻿@page "/control_de_acceso_al_sistema"
+@layout PjrProject.Components.Layout.MainLayout
+@rendermode InteractiveServer
+
+<H2Pro Centrado="true" Texto="Control de Acceso al Sistema" />
+
+<Layout_container>
+    <!-- ================= FORM ================= -->
+    <section class="form-section">
+
+        <FormContainer>
+
+            <InputFlotante Label="Usuario"
+                           @bind-Valor="nuevoUsuario" />
+
+            <InputFlotante Label="Rol"
+                           @bind-Valor="nuevoRol" />
+
+            <InputFlotante Label="Estado"
+                           @bind-Valor="nuevoEstado" />
+
+            <BotonPro Texto="Agregar Acceso"
+                      OnClick="AgregarAcceso" />
+
+        </FormContainer>
+
+    </section>
+
+    <!-- ================= TABLE ================= -->
+    <section class="table-section">
+
+        <TablaPro>
+            <Header>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Estado</th>
+            </tr>
+            </Header>
+
+            <Body>
+                @foreach (var acceso in accesos)
+                {
+                <tr>
+                    <td>@acceso.Id</td>
+                    <td>@acceso.Usuario</td>
+                    <td>@acceso.Rol</td>
+                    <td>@acceso.Estado</td>
+                </tr>
+            }
+            </Body>
+        </TablaPro>
+
+    </section>
+
+</Layout_container>
+
+<!-- ================= MENSAJE ================= -->
+<MensajePro Texto="@mensaje" />
 
 @code {
+    private string nuevoUsuario = "";
+    private string nuevoRol = "";
+    private string nuevoEstado = "";
+    private string mensaje = "";
 
+    // Clase interna
+    private class AccesoSistema
+    {
+        public int Id { get; set; }
+        public string Usuario { get; set; } = "";
+        public string Rol { get; set; } = "";
+        public string Estado { get; set; } = "";
+    }
+
+    private List<AccesoSistema> accesos = new()
+    {
+        new AccesoSistema { Id = 1, Usuario = "admin", Rol = "Administrador", Estado = "Activo" },
+        new AccesoSistema { Id = 2, Usuario = "jperez", Rol = "Vigilante", Estado = "Activo" }
+    };
+
+    private void AgregarAcceso()
+    {
+        if (string.IsNullOrWhiteSpace(nuevoUsuario) ||
+            string.IsNullOrWhiteSpace(nuevoRol) ||
+            string.IsNullOrWhiteSpace(nuevoEstado))
+        {
+            mensaje = "Todos los campos son obligatorios.";
+            return;
+        }
+
+        accesos.Add(new AccesoSistema
+        {
+            Id = accesos.Count + 1,
+            Usuario = nuevoUsuario,
+            Rol = nuevoRol,
+            Estado = nuevoEstado
+        });
+
+        mensaje = "Acceso agregado correctamente.";
+        nuevoUsuario = "";
+        nuevoRol = "";
+        nuevoEstado = "";
+    }
 }

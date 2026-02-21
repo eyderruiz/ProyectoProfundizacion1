@@ -1,5 +1,106 @@
-﻿<h3>Gestion_de_Rutas_de_vigilancia</h3>
+﻿@page "/gestion_de_rutas_de_vigilancia"
+@layout PjrProject.Components.Layout.MainLayout
+@rendermode InteractiveServer
+
+<H2Pro Centrado="true" Texto="Gestión de Rutas de Vigilancia" />
+
+<Layout_container>
+    <!-- ================= FORM ================= -->
+    <section class="form-section">
+
+        <FormContainer>
+
+            <InputFlotante Label="Nombre de Ruta"
+                           @bind-Valor="nuevoNombreRuta" />
+
+            <InputFlotante Label="Descripción"
+                           @bind-Valor="nuevaDescripcion" />
+
+            <InputFlotante Label="Zona"
+                           @bind-Valor="nuevaZona" />
+
+            <BotonPro Texto="Agregar Ruta"
+                      OnClick="AgregarRuta" />
+
+        </FormContainer>
+
+    </section>
+
+    <!-- ================= TABLE ================= -->
+    <section class="table-section">
+
+        <TablaPro>
+            <Header>
+            <tr>
+                <th>ID</th>
+                <th>Nombre Ruta</th>
+                <th>Descripción</th>
+                <th>Zona</th>
+            </tr>
+            </Header>
+
+            <Body>
+                @foreach (var ruta in rutas)
+                {
+                <tr>
+                    <td>@ruta.Id</td>
+                    <td>@ruta.NombreRuta</td>
+                    <td>@ruta.Descripcion</td>
+                    <td>@ruta.Zona</td>
+                </tr>
+            }
+            </Body>
+        </TablaPro>
+
+    </section>
+
+</Layout_container>
+
+<!-- ================= MENSAJE ================= -->
+<MensajePro Texto="@mensaje" />
 
 @code {
+    private string nuevoNombreRuta = "";
+    private string nuevaDescripcion = "";
+    private string nuevaZona = "";
+    private string mensaje = "";
 
+    // Clase interna
+    private class RutaVigilancia
+    {
+        public int Id { get; set; }
+        public string NombreRuta { get; set; } = "";
+        public string Descripcion { get; set; } = "";
+        public string Zona { get; set; } = "";
+    }
+
+    private List<RutaVigilancia> rutas = new()
+    {
+        new RutaVigilancia { Id = 1, NombreRuta = "Ruta Norte", Descripcion = "Recorrido perimetral zona norte", Zona = "Zona Norte" },
+        new RutaVigilancia { Id = 2, NombreRuta = "Ruta Principal", Descripcion = "Accesos principales y parqueadero", Zona = "Zona Central" }
+    };
+
+    private void AgregarRuta()
+    {
+        if (string.IsNullOrWhiteSpace(nuevoNombreRuta) ||
+            string.IsNullOrWhiteSpace(nuevaDescripcion) ||
+            string.IsNullOrWhiteSpace(nuevaZona))
+        {
+            mensaje = "Todos los campos son obligatorios.";
+            return;
+        }
+
+        rutas.Add(new RutaVigilancia
+        {
+            Id = rutas.Count + 1,
+            NombreRuta = nuevoNombreRuta,
+            Descripcion = nuevaDescripcion,
+            Zona = nuevaZona
+        });
+
+        mensaje = "Ruta agregada correctamente.";
+        nuevoNombreRuta = "";
+        nuevaDescripcion = "";
+        nuevaZona = "";
+    }
 }

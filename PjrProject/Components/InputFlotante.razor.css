@@ -1,0 +1,62 @@
+﻿/* ===============================
+   ✨ INPUTS FLOTANTES MODERNOS PRO
+================================= */
+
+#inputsOrden {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+}
+
+/* Contenedor relativo */
+.input-flotante {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+    /* Input */
+    .input-flotante input {
+        width: 100%;
+        padding: 15px 14px;
+        font-size: 16px; /* 🔥 un poco más grande */
+        font-weight: 500; /* 🔥 más presencia */
+        border: 2px solid #b4e9ed;
+        border-radius: 12px;
+        outline: none;
+        background-color: #f3fbfc;
+        color: #1e5f6e; /* 🔥 más contraste */
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        /* Foco */
+        .input-flotante input:focus {
+            border-color: #28a2b2;
+            box-shadow: 0 0 0 3px rgba(40, 162, 178, 0.25);
+        }
+
+    /* Label */
+    .input-flotante label {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #237e90;
+        font-size: 15px; /* 🔥 más grande */
+        font-weight: 600; /* 🔥 más marcada */
+        letter-spacing: 0.3px; /* 🔥 toque moderno */
+        pointer-events: none;
+        background: #f3fbfc;
+        padding: 0 6px;
+        transition: all 0.3s ease;
+    }
+
+    /* Animación flotante */
+    .input-flotante input:focus + label,
+    .input-flotante input:valid + label {
+        top: -9px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #28a2b2;
+    }
