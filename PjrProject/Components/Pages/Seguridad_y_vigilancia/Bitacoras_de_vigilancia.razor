@@ -1,0 +1,106 @@
+﻿@page "/bitacoras_de_vigilancia"
+@layout PjrProject.Components.Layout.MainLayout
+@rendermode InteractiveServer
+
+<H2Pro Centrado="true" Texto="Bitácoras de Vigilancia" />
+
+<Layout_container>
+    <!-- ================= FORM ================= -->
+    <section class="form-section">
+
+        <FormContainer>
+
+            <InputFlotante Label="Fecha"
+                           @bind-Valor="nuevaFecha" />
+
+            <InputFlotante Label="Descripción"
+                           @bind-Valor="nuevaDescripcion" />
+
+            <InputFlotante Label="Vigilante"
+                           @bind-Valor="nuevoVigilante" />
+
+            <BotonPro Texto="Agregar Bitácora"
+                      OnClick="AgregarBitacora" />
+
+        </FormContainer>
+
+    </section>
+
+    <!-- ================= TABLE ================= -->
+    <section class="table-section">
+
+        <TablaPro>
+            <Header>
+            <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Descripción</th>
+                <th>Vigilante</th>
+            </tr>
+            </Header>
+
+            <Body>
+                @foreach (var bitacora in bitacoras)
+                {
+                <tr>
+                    <td>@bitacora.Id</td>
+                    <td>@bitacora.Fecha</td>
+                    <td>@bitacora.Descripcion</td>
+                    <td>@bitacora.Vigilante</td>
+                </tr>
+            }
+            </Body>
+        </TablaPro>
+
+    </section>
+
+</Layout_container>
+
+<!-- ================= MENSAJE ================= -->
+<MensajePro Texto="@mensaje" />
+
+@code {
+    private string nuevaFecha = "";
+    private string nuevaDescripcion = "";
+    private string nuevoVigilante = "";
+    private string mensaje = "";
+
+    // Clase interna
+    private class BitacoraVigilancia
+    {
+        public int Id { get; set; }
+        public string Fecha { get; set; } = "";
+        public string Descripcion { get; set; } = "";
+        public string Vigilante { get; set; } = "";
+    }
+
+    private List<BitacoraVigilancia> bitacoras = new()
+    {
+        new BitacoraVigilancia { Id = 1, Fecha = "21/02/2026", Descripcion = "Ronda nocturna sin novedades", Vigilante = "Juan Pérez" },
+        new BitacoraVigilancia { Id = 2, Fecha = "21/02/2026", Descripcion = "Ingreso de proveedor autorizado", Vigilante = "María Gómez" }
+    };
+
+    private void AgregarBitacora()
+    {
+        if (string.IsNullOrWhiteSpace(nuevaFecha) ||
+            string.IsNullOrWhiteSpace(nuevaDescripcion) ||
+            string.IsNullOrWhiteSpace(nuevoVigilante))
+        {
+            mensaje = "Todos los campos son obligatorios.";
+            return;
+        }
+
+        bitacoras.Add(new BitacoraVigilancia
+        {
+            Id = bitacoras.Count + 1,
+            Fecha = nuevaFecha,
+            Descripcion = nuevaDescripcion,
+            Vigilante = nuevoVigilante
+        });
+
+        mensaje = "Bitácora agregada correctamente.";
+        nuevaFecha = "";
+        nuevaDescripcion = "";
+        nuevoVigilante = "";
+    }
+}

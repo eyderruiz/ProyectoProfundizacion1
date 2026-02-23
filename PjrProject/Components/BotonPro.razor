@@ -1,0 +1,8 @@
+﻿<button class="btn-pro" @onclick="OnClick">
+    <span>@Texto</span>
+</button>
+
+@code {
+    [Parameter] public string Texto { get; set; } = "Botón";
+    [Parameter] public EventCallback OnClick { get; set; }
+}
