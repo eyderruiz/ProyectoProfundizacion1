@@ -1,0 +1,53 @@
+@page "/residentes/gestion-por-unidad"
+@rendermode InteractiveServer
+
+@inject PjrProject.Services.IResidenteService ResidenteService
+@inject NavigationManager Navigation
+
+<H2Pro Texto="Gestión de Residentes por Unidad" Centrado="true" />
+
+<div class="page-actions">
+    <BotonPro Texto="Nuevo Residente" OnClick="@NuevoResidente" />
+</div>
+
+@if (residentes == null)
+{
+    <p>Cargando...</p>
+}
+else if (!residentes.Any())
+{
+    <p>No hay residentes.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr><th>Nombre</th><th>Unidad</th><th>Teléfono</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var r in residentes)
+            {
+                <tr>
+                    <td>@r.Nombre</td>
+                    <td>@r.Unidad</td>
+                    <td>@r.Telefono</td>
+                    <td>
+                        <BotonPro Texto="Editar" OnClick="@(()=>Editar(r.Id))" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<PjrProject.Models.ResidenteDto>? residentes;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        residentes = await ResidenteService.ObtenerPorUnidadAsync(0);
+    }
+
+    private void NuevoResidente() => Navigation.NavigateTo("/residentes/nuevo");
+    private void Editar(int id) => Navigation.NavigateTo($"/residentes/editar/{id}");
+}
