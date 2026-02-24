@@ -1,0 +1,33 @@
+@page "/residentes/historial"
+@rendermode InteractiveServer
+
+@inject PjrProject.Services.IResidenteService ResidenteService
+
+<H2Pro Texto="Historial de Residentes" Centrado="true" />
+
+@if (historial == null)
+{
+    <p>Cargando historial...</p>
+}
+else if (!historial.Any())
+{
+    <p>No hay registros en el historial.</p>
+}
+else
+{
+    <ul class="list-unstyled">
+        @foreach (var h in historial)
+        {
+            <li class="mb-2"><strong>@h.Fecha.ToString("g")</strong> — @h.Detalle</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<PjrProject.Models.HistorialDto>? historial;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        historial = await ResidenteService.ObtenerHistorialAsync(0);
+    }
+}

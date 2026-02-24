@@ -1,0 +1,36 @@
+@page "/ingresos/parqueaderos"
+@rendermode InteractiveServer
+
+@inject PjrProject.Services.IIngresoService IngresoService
+
+<H2Pro Texto="Gestión de Parqueaderos" Centrado="true" />
+
+@if (parqueaderos == null)
+{
+    <p>Cargando parqueaderos...</p>
+}
+else
+{
+    <table class="table">
+        <thead><tr><th>Nombre</th><th>Ubicación</th><th>Capacidad</th></tr></thead>
+        <tbody>
+            @foreach (var p in parqueaderos)
+            {
+                <tr>
+                    <td>@p.Nombre</td>
+                    <td>@p.Ubicacion</td>
+                    <td>@p.Capacidad</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<PjrProject.Models.ParqueaderoDto>? parqueaderos;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        parqueaderos = await IngresoService.ObtenerParqueaderosAsync();
+    }
+}

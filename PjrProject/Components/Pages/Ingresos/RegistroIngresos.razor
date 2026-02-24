@@ -1,0 +1,45 @@
+@page "/ingresos/registro"
+@rendermode InteractiveServer
+
+@inject PjrProject.Services.IIngresoService IngresoService
+@inject NavigationManager Navigation
+
+<H2Pro Texto="Registro de Ingresos" Centrado="true" />
+
+<div class="page-actions">
+    <BotonPro Texto="Registrar Ingreso" OnClick="@RegistrarIngreso" />
+</div>
+
+@if (ingresos == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <table class="table">
+        <thead><tr><th>Tipo</th><th>Fecha</th><th>Origen</th><th>Acciones</th></tr></thead>
+        <tbody>
+            @foreach (var i in ingresos)
+            {
+                <tr>
+                    <td>@i.Tipo</td>
+                    <td>@i.Fecha.ToString("g")</td>
+                    <td>@i.Origen</td>
+                    <td><BotonPro Texto="Ver" OnClick="@(()=>VerIngreso(i.Id))" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<PjrProject.Models.IngresoDto>? ingresos;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        ingresos = await IngresoService.ObtenerRegistrosAsync();
+    }
+
+    private void RegistrarIngreso() => Navigation.NavigateTo("/ingresos/nuevo");
+    private void VerIngreso(int id) => Navigation.NavigateTo($"/ingresos/{id}");
+}

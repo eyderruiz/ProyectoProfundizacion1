@@ -2,6 +2,7 @@ using PjrProject.Components;
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using PjrProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,10 @@ builder.Services
     })
     .AddBootstrap5Providers()
     .AddFontAwesomeIcons();
+
+// Registrar servicios de dominio (mocks para desarrollo)
+builder.Services.AddScoped<IResidenteService, ResidenteService>();
+builder.Services.AddScoped<IIngresoService, IngresoService>();
 
 var app = builder.Build();
 

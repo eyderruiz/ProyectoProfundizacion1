@@ -1,0 +1,29 @@
+@page "/ingresos/tipos"
+@rendermode InteractiveServer
+
+@inject PjrProject.Services.IIngresoService IngresoService
+
+<H2Pro Texto="Tipos de Ingreso" Centrado="true" />
+
+@if (tipos == null)
+{
+    <p>Cargando tipos...</p>
+}
+else
+{
+    <ul>
+        @foreach (var t in tipos)
+        {
+            <li>@t.Id — @t.Nombre</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<PjrProject.Models.TipoIngresoDto>? tipos;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        tipos = await IngresoService.ObtenerTiposAsync();
+    }
+}
