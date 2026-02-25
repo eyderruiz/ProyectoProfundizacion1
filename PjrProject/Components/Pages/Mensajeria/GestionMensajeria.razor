@@ -1,0 +1,184 @@
+﻿@page "/gestion-mensajeria"
+@layout PjrProject.Components.Layout.MainLayout
+@rendermode InteractiveServer
+
+<H2Pro Centrado="true" Texto="Gestión de Mensajería"/>
+
+<Layout_container>
+    <section class="form-section">
+
+        <FormContainer>
+
+            <!--<InputFlotante 
+                Label="Identificador"
+                Tipo="number" 
+                @bind-Valor="nuevoId"
+            />-->
+
+            <!--<InputFlotante
+                Label="Empresa"
+                Tipo="text"
+                @bind-Valor="nuevoEmpresa"
+            />-->
+
+            <div class="input-flotante">
+                <input @bind="nuevoEmpresa"
+                       type="text"
+                       required />
+                <label>Empresa</label>
+            </div>
+
+            <!--<InputFlotante
+                Label="Fecha De Recepción"
+                Tipo="Date"
+                @bind-Valor="nuevoFechaRecepcion"
+            />-->
+            <div class="input-flotante">
+                <input @bind="nuevoFechaRecepcion"
+                       type="date"
+                       required />
+                <label>Fecha de Recepción</label>
+            </div>
+            
+            <!--<InputFlotante
+                Label="Fecha De Entrega"
+                Tipo="Date"
+                @bind-Valor="nuevoFechaEntrega"
+            />-->
+            <div class="input-flotante">
+                <input @bind="nuevoFechaEntrega"
+                       type="date"
+                       required />
+                <label>Fecha de Entrega</label>
+            </div>
+
+            <!--<InputFlotante
+                Label="Identificador de la unidad"
+                Tipo="number"
+                @bind-Valor="nuevoUnidadId"
+            />-->
+            <div class="input-flotante">
+                <input @bind="nuevoUnidadId"
+                       type="number"
+                       required />
+                <label>Identificador de la Unidad</label>
+            </div>
+
+            <div class="input-flotante">
+                <input @bind="nuevoGuia"
+                       type="text"
+                       required />
+                <label>Guía</label>
+            </div>
+
+            <BotonPro 
+                Texto="Registrar Mensaje"
+                OnClick="RegistrarMensaje"          
+            />
+
+        </FormContainer>
+
+    </section>
+    <section class="table-section">
+
+        <TablaPro>
+            <Header>
+            <tr>
+                <th>ID</th>
+                <th>Empresa</th>
+                <th>Guía</th>
+                <th>Fecha de recepción</th>
+                <th>Fecha de entrega</th>
+                <th>Unidad Id</th>
+            </tr>
+            </Header>
+
+            <Body>
+                @foreach (var mensaje in mensajes)
+                {
+                <tr>
+                    <td>@mensaje.Id</td>
+                    <td>@mensaje.Empresa</td>
+                    <td>@mensaje.Guia</td>
+                    <td>@mensaje.FechaRecepcion</td>
+                    <td>@mensaje.FechaEntrega</td>
+                    <td>@mensaje.UnidadId.UnidadId</td>
+                </tr>
+            }
+            </Body>
+        </TablaPro>
+
+    </section>
+</Layout_container>
+
+@code {
+    private long nuevoId;
+    private string nuevoEmpresa;
+    private string nuevoGuia;
+    private DateTime nuevoFechaRecepcion;
+    private DateTime nuevoFechaEntrega;
+    private long nuevoUnidadId;
+    private string info = "";
+
+    private List<Mensaje> mensajes = new(){
+        new Mensaje{
+            Id = 1,
+            Empresa = "Cualquiera",
+            Guia = "4321",
+            FechaRecepcion=new DateTime(2026,02,10,12,30,10),
+            FechaEntrega= new DateTime(2026, 02, 10, 13, 30, 10),
+            UnidadId=new Apartamento()
+            {
+                UnidadId=1,
+                TorreId=new Torre()
+                {
+                    Id=1,
+                    ConjuntoId=1,
+                    Nombre=""
+                },
+                Numero=0,
+                Tipo="",
+                Area=0
+            }
+        }
+    };
+
+
+    public void RegistrarMensaje(){
+        Console.WriteLine("Uy mera shit");
+        if (string.IsNullOrWhiteSpace(nuevoEmpresa) ||
+            string.IsNullOrWhiteSpace(nuevoGuia) ||
+            nuevoFechaEntrega == default ||
+            nuevoFechaRecepcion == default ||
+            nuevoUnidadId <= 0)
+        {
+            Console.WriteLine(nuevoEmpresa + "\n"+nuevoGuia+"\n"+nuevoFechaEntrega+"\n"+nuevoFechaRecepcion+"\n"+nuevoUnidadId);
+        info = "Todos los campos son obligatorios.";
+            return;
+        }
+
+        Console.WriteLine("Vea la infor: "+info);
+
+        mensajes.Add(new Mensaje
+        {
+            Id = new Random().Next(10,500),
+            Empresa = nuevoEmpresa,
+            Guia = nuevoGuia,
+            FechaRecepcion = nuevoFechaRecepcion,
+            FechaEntrega = nuevoFechaEntrega,
+            UnidadId = new Apartamento()
+            {
+                UnidadId=nuevoUnidadId    
+            },
+        });
+
+        info = "Mensaje registrado correctamente!";
+        nuevoId = 0;
+        nuevoEmpresa = null;
+        nuevoGuia = null;
+        nuevoFechaRecepcion = new DateTime();
+        nuevoFechaEntrega = new DateTime();
+        nuevoUnidadId = 0;
+        Console.WriteLine(info);
+    }
+}

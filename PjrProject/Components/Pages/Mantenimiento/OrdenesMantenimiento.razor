@@ -2,89 +2,102 @@
 @layout PjrProject.Components.Layout.MainLayout
 @rendermode InteractiveServer
 
-@using PjrProject.Models
+@using PjrProject.Models.modelos_mantenimiento
 
-<div class="page-header">
-    <h2>Órdenes de Mantenimiento</h2>
-</div>
+<H2Pro Centrado="true" Texto="Tipos mantenimiento" />
 
-<div class="layout-container">
+<Layout_container>
 
+    <!-- ================= FORM ================= -->
+    <section class="form-section">
 
-<section class="form-section">
-     <div class="form-container">
-        <div id="inputsOrden">
+        <FormContainer>
 
-                <div class="input-flotante">
-                    <input @bind="nuevaDescripcion" required />
-                    <label>Descripción</label>
-                </div>
+            <!-- Texto -->
+            <InputFlotante Label="Descripcion"
+                           Tipo="text"
+                           @bind-Valor="nuevaDescripcion" />
 
-                <div class="input-flotante">
-                    <input @bind="nuevoResponsable" required />
-                    <label>Responsable</label>
-                </div>
+            <!-- Número -->
+            <InputFlotante Label="Responsable"
+                           Tipo="text"
+                           Min="0"
+                           @bind-Valor="nuevoResponsable" />
 
-                <button class="btn-pro" @onclick="AgregarOrden">
-                    <span>Agregar Orden</span>
-                </button>
-        </div>
-    </div>
-</section>
+            @* <InputFechaPersonalizado Label="Fecha"
+                                     @bind-Valor="nuevaFecha" /> *@
 
+            <input type="date" @bind="nuevaFecha" />
 
+            <BotonPro Texto="Agregar Tipo"
+                      OnClick="AgregarOrden" />
 
-<section class="table-section">
+        </FormContainer>
 
+    </section>
 
-            <TablaPro>
-                <Header>
+    <!-- ================= TABLE ================= -->
+    <section class="table-section">
+
+        <TablaPro>
+            <Header>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+            </tr>
+            </Header>
+
+            <Body>
+                @foreach (var tipo in ordenes)
+                {
                 <tr>
-                    <th>ID</th>
-                    <th>Descripción</th>
-                    <th>Responsable</th>
+                    <td>@tipo.Id</td>
+                    <td>@tipo.Descripcion</td>
+                    <td>@tipo.Responsable</td>
+                    <td>@tipo.Fecha</td>
                 </tr>
-                </Header>
+            }
+            </Body>
+        </TablaPro>
 
-                <Body>
-                    @foreach (var orden in ordenes)
-                    {
-                    <tr>
-                        <td>@orden.Id</td>
-                        <td>@orden.Descripcion</td>
-                        <td>@orden.Responsable</td>
-                    </tr>
-                }
-                </Body>
-            </TablaPro>
+    </section>
 
+</Layout_container>
 
-</section>
+<MensajePro Texto="@mensaje" />
 
-</div>
-
-@if (!string.IsNullOrEmpty(mensaje))
-{
-    <p class="mensaje">@mensaje</p>
-}
 
 @code {
     private string nuevaDescripcion = "";
     private string nuevoResponsable = "";
+    private DateTime? nuevaFecha;
     private string mensaje = "";
 
     private List<Orden> ordenes = new()
     {
-        new Orden { Id = 1, Descripcion = "Cambio de aceite", Responsable = "Carlos" },
-        new Orden { Id = 2, Descripcion = "Revisión eléctrica", Responsable = "Ana" }
+        new Orden { Id = 1, Descripcion = "Cambio de aceite", Responsable = "Carlos",Fecha = "2026-02-18" },
+        new Orden { Id = 2, Descripcion = "Revisión eléctrica", Responsable = "Ana" ,Fecha = "2026-01-18"  }
     };
 
     private void AgregarOrden()
     {
-        if (string.IsNullOrWhiteSpace(nuevaDescripcion) ||
-            string.IsNullOrWhiteSpace(nuevoResponsable))
+        if (string.IsNullOrWhiteSpace(nuevaDescripcion))
         {
-            mensaje = "Todos los campos son obligatorios.";
+            mensaje = "Descripcion vacía";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(nuevoResponsable))
+        {
+            mensaje = "Responsable vacío";
+            return;
+        }
+
+        if (nuevaFecha == null)
+        {
+            mensaje = "Fecha null";
             return;
         }
 
@@ -92,11 +105,15 @@
         {
             Id = ordenes.Count + 1,
             Descripcion = nuevaDescripcion,
-            Responsable = nuevoResponsable
+            Responsable = nuevoResponsable,
+            Fecha = nuevaFecha.Value.ToString("yyyy-MM-dd")
         });
 
         mensaje = "Orden agregada correctamente.";
+
         nuevaDescripcion = "";
         nuevoResponsable = "";
+        nuevaFecha = null;
+        
     }
 }
