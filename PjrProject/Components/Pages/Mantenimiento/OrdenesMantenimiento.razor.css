@@ -41,12 +41,12 @@ h2 {
    ✨ INPUTS FLOTANTES MODERNOS PRO
 ================================= */
 
-#inputsOrden {
+/*#inputsOrden {
     display: flex;
     flex-direction: column;
     gap: 18px;
     align-items: center;
-}
+}*/
 
 /* Contenedor relativo */
 .input-flotante {
@@ -56,18 +56,18 @@ h2 {
 }
 
     /* Input */
-    .input-flotante input {
+    /*.input-flotante input {
         width: 100%;
         padding: 15px 14px;
-        font-size: 16px; /* 🔥 un poco más grande */
-        font-weight: 500; /* 🔥 más presencia */
-        border: 2px solid #b4e9ed;
+        font-size: 16px;*/ /* 🔥 un poco más grande */
+        /*font-weight: 500;*/ /* 🔥 más presencia */
+        /*border: 2px solid #b4e9ed;
         border-radius: 12px;
         outline: none;
         background-color: #f3fbfc;
-        color: #1e5f6e; /* 🔥 más contraste */
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
+        color: #1e5f6e;*/ /* 🔥 más contraste */
+        /*transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }*/
 
         /* Foco */
         .input-flotante input:focus {
