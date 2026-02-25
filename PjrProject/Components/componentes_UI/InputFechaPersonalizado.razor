@@ -1,0 +1,34 @@
+﻿<div class="input-flotante">
+    <input value="@ValorString"
+           @oninput="OnInput"
+           type="date"
+           min="@Min"
+           required />
+    <label>@Label</label>
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = "";
+
+    [Parameter] public DateTime? Valor { get; set; }
+    [Parameter] public EventCallback<DateTime?> ValorChanged { get; set; }
+
+    [Parameter] public string? Min { get; set; }
+
+    private string ValorString =>
+        Valor?.ToString("yyyy-MM-dd") ?? "";
+
+    private async Task OnInput(ChangeEventArgs e)
+    {
+        if (DateTime.TryParse(e.Value?.ToString(), out var fecha))
+        {
+            Valor = fecha;
+            await ValorChanged.InvokeAsync(fecha);
+        }
+        else
+        {
+            Valor = null;
+            await ValorChanged.InvokeAsync(null);
+        }
+    }
+}
