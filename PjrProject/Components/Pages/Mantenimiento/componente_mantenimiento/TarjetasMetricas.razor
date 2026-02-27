@@ -1,0 +1,39 @@
+
+@using PjrProject.Shared
+
+<div class="tarjeta-metrica">
+    <span class="icono">
+        @* Prefer a provided icon template (IconTemplate). If none provided,
+           render the shared Icon component using IconName/IconSize. *@
+        @if (IconTemplate is not null)
+        {
+            @IconTemplate
+        }
+        else
+        {
+            <PjrProject.Shared.Icon Name="@IconName" Size="@IconSize" />
+        }
+    </span>
+
+    <div class="contenido">
+        <h4>@Title</h4>
+        <p class="valor">@Value</p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "Título";
+
+    [Parameter]
+    public string Value { get; set; } = "0";
+
+    [Parameter]
+    public RenderFragment? IconTemplate { get; set; }
+
+    [Parameter]
+    public string IconName { get; set; } = "circle";
+
+    [Parameter]
+    public int IconSize { get; set; } = 28;
+}

@@ -1,119 +1,46 @@
-﻿@page "/ordenes"
-@layout PjrProject.Components.Layout.MainLayout
-@rendermode InteractiveServer
+﻿
+@page "/ordenes"
 
-@using PjrProject.Models.modelos_mantenimiento
+@* Contenedor con título al inicio y botón al final *@
+<div class="header-container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;">
+    <h2 style="margin:0">Órdenes - Métricas</h2>
 
-<H2Pro Centrado="true" Texto="Tipos mantenimiento" />
+    @* Usar componente BotonPro existente *@
+    <BotonPro Texto="Nuevo" OnClick="AddNew" />
+</div>
 
-<Layout_container>
 
-    <!-- ================= FORM ================= -->
-    <section class="form-section">
+@* Contenedor principal de métricas (tarjetas) *@
+<div class="tarjetas-card">
+    <div class="tarjetas-grid">
+        <TarjetasMetricas Title="Usuarios activos" Value="1,234" IconName="user" />
 
-        <FormContainer>
+        <TarjetasMetricas Title="Órdenes hoy" Value="87" IconName="orders" />
 
-            <!-- Texto -->
-            <InputFlotante Label="Descripcion"
-                           Tipo="text"
-                           @bind-Valor="nuevaDescripcion" />
+        <TarjetasMetricas Title="Tiempo promedio" Value="2.4h" IconName="clock" />
+    </div>
+</div>
 
-            <!-- Número -->
-            <InputFlotante Label="Responsable"
-                           Tipo="text"
-                           Min="0"
-                           @bind-Valor="nuevoResponsable" />
+@* Contenedor para filtros/listas (similar a tarjetas-card pero más delgado) *@
+<div class="contenedor-listasfiltros">
+    <div class="block">
+        @* Área reservada para botones/filtros futuros *@
+        <!-- botones filtros vendrán aquí -->
+    </div>
+</div>
 
-            @* <InputFechaPersonalizado Label="Fecha"
-                                     @bind-Valor="nuevaFecha" /> *@
-
-            <input type="date" @bind="nuevaFecha" />
-
-            <BotonPro Texto="Agregar Tipo"
-                      OnClick="AgregarOrden" />
-
-        </FormContainer>
-
-    </section>
-
-    <!-- ================= TABLE ================= -->
-    <section class="table-section">
-
-        <TablaPro>
-            <Header>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Fecha</th>
-            </tr>
-            </Header>
-
-            <Body>
-                @foreach (var tipo in ordenes)
-                {
-                <tr>
-                    <td>@tipo.Id</td>
-                    <td>@tipo.Descripcion</td>
-                    <td>@tipo.Responsable</td>
-                    <td>@tipo.Fecha</td>
-                </tr>
-            }
-            </Body>
-        </TablaPro>
-
-    </section>
-
-</Layout_container>
-
-<MensajePro Texto="@mensaje" />
-
+@* Contenedor grande para la sección de órdenes (panel principal) *@
+<div class="contenedor-ordenes">
+    <div class="block">
+        @* Contenido de órdenes (tabla, listados) irá aquí *@
+        <!-- ordenes contenido principal -->
+    </div>
+</div>
 
 @code {
-    private string nuevaDescripcion = "";
-    private string nuevoResponsable = "";
-    private DateTime? nuevaFecha;
-    private string mensaje = "";
-
-    private List<Orden> ordenes = new()
+    void AddNew()
     {
-        new Orden { Id = 1, Descripcion = "Cambio de aceite", Responsable = "Carlos",Fecha = "2026-02-18" },
-        new Orden { Id = 2, Descripcion = "Revisión eléctrica", Responsable = "Ana" ,Fecha = "2026-01-18"  }
-    };
-
-    private void AgregarOrden()
-    {
-        if (string.IsNullOrWhiteSpace(nuevaDescripcion))
-        {
-            mensaje = "Descripcion vacía";
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(nuevoResponsable))
-        {
-            mensaje = "Responsable vacío";
-            return;
-        }
-
-        if (nuevaFecha == null)
-        {
-            mensaje = "Fecha null";
-            return;
-        }
-
-        ordenes.Add(new Orden
-        {
-            Id = ordenes.Count + 1,
-            Descripcion = nuevaDescripcion,
-            Responsable = nuevoResponsable,
-            Fecha = nuevaFecha.Value.ToString("yyyy-MM-dd")
-        });
-
-        mensaje = "Orden agregada correctamente.";
-
-        nuevaDescripcion = "";
-        nuevoResponsable = "";
-        nuevaFecha = null;
-        
+        // Acción al presionar el botón. Puedes reemplazar con la lógica real.
     }
 }
+

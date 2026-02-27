@@ -1,0 +1,53 @@
+@namespace PjrProject.Shared
+@using Microsoft.AspNetCore.Components
+
+@* Componente central de íconos SVG (ubicado en Shared). *@
+@code {
+    [Parameter]
+    public string Name { get; set; } = "circle";
+
+    [Parameter]
+    public int Size { get; set; } = 28;
+
+    private string norm => (Name ?? string.Empty).ToLowerInvariant();
+}
+
+<div style=@($"width:{Size}px;height:{Size}px;display:inline-block;line-height:0;")>
+    @switch (norm)
+    {
+        case "user":
+            <svg viewBox="0 0 24 24" width="@Size" height="@Size" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path fill="#7fd8e1" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+            break;
+        case "orders":
+        case "order":
+        case "shopping-cart":
+            <svg viewBox="0 0 24 24" width="@Size" height="@Size" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path fill="#7fd8e1" d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zM7.16 14l.84-2h7.45c.75 0 1.41-.41 1.75-1.03L21 4H6.21l-.94-2H1v2h3l3.6 7.59-1.35 2.45C6.16 15.37 6 15.68 6 16c0 1.1.9 2 2 2h9v-2H8.42c-.14 0-.25-.11-.25-.25 0-.03.01-.06.03-.09L9 14h9.16z" />
+            </svg>
+            break;
+        case "clock":
+        case "time":
+            <svg viewBox="0 0 24 24" width="@Size" height="@Size" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path fill="#7fd8e1" d="M12 1a11 11 0 1 0 11 11A11.012 11.012 0 0 0 12 1zm1 12.59V7h-2v6l5 3 .999-1.66z"/>
+            </svg>
+            break;
+        case "chart":
+        case "stats":
+            <svg viewBox="0 0 24 24" width="@Size" height="@Size" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path fill="#7fd8e1" d="M3 17h3v4H3v-4zm5-6h3v10H8V11zm5-4h3v14h-3V7zm5-6h3v20h-3V1z"/>
+            </svg>
+            break;
+        case "bell":
+            <svg viewBox="0 0 24 24" width="@Size" height="@Size" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path fill="#7fd8e1" d="M12 22c1.1 0 2-.9 2-2H10c0 1.1.9 2 2 2zm6-6V11c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 1 0-3 0v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+            </svg>
+            break;
+        default:
+            <svg viewBox="0 0 24 24" width="@Size" height="@Size" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="12" r="10" fill="#7fd8e1" />
+            </svg>
+            break;
+    }
+</div>

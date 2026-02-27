@@ -2,25 +2,35 @@
 @layout PjrProject.Components.Layout.MainLayout
 @rendermode InteractiveServer
 
-<H2Pro Centrado="true" Texto="Gestión de Proveedores" />
+@using PjrProject.Models.modelos_mantenimiento
+
+<H2Pro Centrado="true" Texto="Tipos mantenimiento" />
 
 <Layout_container>
+
     <!-- ================= FORM ================= -->
     <section class="form-section">
 
         <FormContainer>
 
-            <InputFlotante Label="Nombre"
-                           @bind-Valor="nuevoNombre" />
+            <!-- Texto -->
+            <InputFlotante Label="Descripcion"
+                           Tipo="text"
+                           @bind-Valor="nuevaDescripcion" />
 
-            <InputFlotante Label="Teléfono"
-                           @bind-Valor="nuevoTelefono" />
+            <!-- Número -->
+            <InputFlotante Label="Responsable"
+                           Tipo="text"
+                           Min="0"
+                           @bind-Valor="nuevoResponsable" />
 
-            <InputFlotante Label="Email"
-                           @bind-Valor="nuevoEmail" />
+            @* <InputFechaPersonalizado Label="Fecha"
+                                     @bind-Valor="nuevaFecha" /> *@
 
-            <BotonPro Texto="Agregar Proveedor"
-                      OnClick="AgregarProveedor" />
+            <input type="date" @bind="nuevaFecha" />
+
+            <BotonPro Texto="Agregar Tipo"
+                      OnClick="AgregarOrden" />
 
         </FormContainer>
 
@@ -34,19 +44,19 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Teléfono</th>
-                <th>Email</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
             </tr>
             </Header>
 
             <Body>
-                @foreach (var proveedor in proveedores)
+                @foreach (var tipo in ordenes)
                 {
                 <tr>
-                    <td>@proveedor.Id</td>
-                    <td>@proveedor.Nombre</td>
-                    <td>@proveedor.Telefono</td>
-                    <td>@proveedor.Email</td>
+                    <td>@tipo.Id</td>
+                    <td>@tipo.Descripcion</td>
+                    <td>@tipo.Responsable</td>
+                    <td>@tipo.Fecha</td>
                 </tr>
             }
             </Body>
@@ -56,51 +66,54 @@
 
 </Layout_container>
 
-<!-- ================= MENSAJE ================= -->
 <MensajePro Texto="@mensaje" />
 
+
 @code {
-    private string nuevoNombre = "";
-    private string nuevoTelefono = "";
-    private string nuevoEmail = "";
+    private string nuevaDescripcion = "";
+    private string nuevoResponsable = "";
+    private DateTime? nuevaFecha;
     private string mensaje = "";
 
-    // Clase interna
-    private class Proveedor
+    private List<Orden> ordenes = new()
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; } = "";
-        public string Telefono { get; set; } = "";
-        public string Email { get; set; } = "";
-    }
-
-    private List<Proveedor> proveedores = new()
-    {
-        new Proveedor { Id = 1, Nombre = "Repuestos Industriales S.A.", Telefono = "3001234567", Email = "contacto@repuestos.com" },
-        new Proveedor { Id = 2, Nombre = "Servicios Técnicos López", Telefono = "3119876543", Email = "info@stlopez.com" }
+        new Orden { Id = 1, Descripcion = "Cambio de aceite", Responsable = "Carlos",Fecha = "2026-02-18" },
+        new Orden { Id = 2, Descripcion = "Revisión eléctrica", Responsable = "Ana" ,Fecha = "2026-01-18"  }
     };
 
-    private void AgregarProveedor()
+    private void AgregarOrden()
     {
-        if (string.IsNullOrWhiteSpace(nuevoNombre) ||
-            string.IsNullOrWhiteSpace(nuevoTelefono) ||
-            string.IsNullOrWhiteSpace(nuevoEmail))
+        if (string.IsNullOrWhiteSpace(nuevaDescripcion))
         {
-            mensaje = "Todos los campos son obligatorios.";
+            mensaje = "Descripcion vacía";
             return;
         }
 
-        proveedores.Add(new Proveedor
+        if (string.IsNullOrWhiteSpace(nuevoResponsable))
         {
-            Id = proveedores.Count + 1,
-            Nombre = nuevoNombre,
-            Telefono = nuevoTelefono,
-            Email = nuevoEmail
+            mensaje = "Responsable vacío";
+            return;
+        }
+
+        if (nuevaFecha == null)
+        {
+            mensaje = "Fecha null";
+            return;
+        }
+
+        ordenes.Add(new Orden
+        {
+            Id = ordenes.Count + 1,
+            Descripcion = nuevaDescripcion,
+            Responsable = nuevoResponsable,
+            Fecha = nuevaFecha.Value.ToString("yyyy-MM-dd")
         });
 
-        mensaje = "Proveedor agregado correctamente.";
-        nuevoNombre = "";
-        nuevoTelefono = "";
-        nuevoEmail = "";
+        mensaje = "Orden agregada correctamente.";
+
+        nuevaDescripcion = "";
+        nuevoResponsable = "";
+        nuevaFecha = null;
+
     }
 }

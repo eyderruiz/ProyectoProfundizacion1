@@ -1,0 +1,89 @@
+
+/* Estilos para Tarjeta métrica (fondo blanco, sin borde, box-shadow)
+   Texto y número en negrilla, tamaño compacto. Icono con color #7fd8e1 */
+
+.tarjeta-metrica {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    border: 2px solid transparent; /* sin borde visible por defecto */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+    border-radius: 8px;
+    width: 160px !important; /* tamaño pequeño por defecto */
+    box-sizing: border-box;
+    min-width: 160px !important;
+    min-height: 72px; /* asegurar altura mínima consistente */
+    flex: 0 0 160px !important; /* fijar tamaño dentro del grid para que todas sean iguales */
+    align-self: stretch !important;
+    transition: border-color 0.18s ease, transform 0.08s ease;
+}
+
+.tarjeta-metrica .icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tarjeta-metrica .icono svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* Forzar color del icono aunque venga desde contenido hijo (named RenderFragment).
+   Use :deep to target descendant SVGs inside the component's child content. */
+.icono :deep(svg), .icono :deep(path), .icono :deep(circle), .icono :deep(rect) {
+    fill: #7fd8e1 !important;
+}
+
+.tarjeta-metrica .contenido h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700; /* negrilla */
+    color: #243a3b;
+}
+
+.tarjeta-metrica .contenido .valor {
+    margin: 2px 0 0 0;
+    font-size: 15px;
+    font-weight: 700; /* negrilla para el número */
+    color: #0f3d3f;
+}
+
+/* Ensure metric cards inside the grid keep consistent sizing */
+.tarjetas-grid .tarjeta-metrica,
+.tarjetas-card .tarjeta-metrica {
+    flex: 0 0 160px !important;
+    width: 160px !important;
+    min-width: 160px !important;
+}
+
+/* Ajustes responsivos para pantallas muy pequeñas */
+@media (max-width: 360px) {
+    .tarjeta-metrica {
+        width: 140px;
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .tarjeta-metrica .icono svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .tarjeta-metrica .contenido h4 { font-size: 12px; }
+    .tarjeta-metrica .contenido .valor { font-size: 14px; }
+}
+
+/* Hover / active: cambiar borde al color solicitado */
+.tarjeta-metrica:hover,
+.tarjeta-metrica:focus-within {
+    border-color: #7fd8e1;
+}
+
+.tarjeta-metrica:active {
+    border-color: #7fd8e1;
+    transform: scale(0.995);
+}
+
