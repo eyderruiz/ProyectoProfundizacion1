@@ -1,1 +1,88 @@
-@* Componente vacío: TarjetaDeOrdenes *@
+@namespace PjrProject.Components.Pages.Mantenimiento.componente_mantenimiento
+@using Microsoft.AspNetCore.Components
+
+@* Tarjeta de ordenes - estructura HTML y parámetros
+   - Muestra prioridad (alert), título + estado, lugar, tipo, descripción,
+     quien reportó, fecha y acciones (Ver detalle / Asignar)
+   - Iconos se representan por spans con clase `icon` (placeholders)
+*@
+
+<div class="tarjeta-ordenes @PriorityClass">
+    <div class="priority-alert">
+        <p class="priority-badge"><span class="badge-icon">⚑</span> <span class="badge-label">Prioridad:</span> <span class="badge-text">@Priority</span></p>
+    </div>
+
+    <div class="header">
+        <h4 class="titulo">@Title</h4>
+        <p class="estado">@Status</p>
+    </div>
+
+    <div class="meta">
+        <p class="lugar"><strong>Lugar:</strong> @Location</p>
+        <p class="tipo"><strong>Tipo:</strong> @MaintenanceType</p>
+    </div>
+
+    <div class="descripcion">
+        <p>@Description</p>
+    </div>
+
+    <div class="reporter">
+        <p><strong>Reportó:</strong> @Reporter</p>
+        <p><strong>Fecha:</strong> @DateString</p>
+    </div>
+
+    <div class="acciones">
+        <button class="btn-editar" @onclick="() => OnViewDetails.InvokeAsync(Id)"><span class="btn-icon">✏️</span> <span class="btn-text">Editar</span></button>
+        <button class="btn-eliminar" @onclick="() => OnAssign.InvokeAsync(Id)"><span class="btn-icon">🗑️</span> <span class="btn-text">Eliminar</span></button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; } = Guid.NewGuid().ToString();
+
+    [Parameter]
+    public string Title { get; set; } = "Orden";
+
+    [Parameter]
+    public string Status { get; set; } = "Pendiente";
+
+    [Parameter]
+    public string Location { get; set; } = "-";
+
+    [Parameter]
+    public string MaintenanceType { get; set; } = "-";
+
+    [Parameter]
+    public string Description { get; set; } = "-";
+
+    [Parameter]
+    public string Reporter { get; set; } = "-";
+
+    [Parameter]
+    public DateTime Date { get; set; } = DateTime.Now;
+
+    [Parameter]
+    public string Priority { get; set; } = "Media";
+
+    [Parameter]
+    public EventCallback<string> OnViewDetails { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnAssign { get; set; }
+
+    string DateString => Date.ToString("yyyy-MM-dd HH:mm");
+
+    // CSS helper class based on Priority parameter
+    string PriorityClass
+    {
+        get
+        {
+            var p = (Priority ?? string.Empty).ToLowerInvariant();
+            if (p.Contains("alta")) return "priority-alta";
+            if (p.Contains("media")) return "priority-media";
+            return "priority-baja";
+        }
+    }
+}
+

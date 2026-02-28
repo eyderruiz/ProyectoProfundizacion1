@@ -1,1 +1,52 @@
-@* Componente vacío: ListaDeFiltros *@
+@using Microsoft.AspNetCore.Components
+
+<div class="lista-filtros">
+    <label for="filtro-@Id">@Label</label>
+    <select id="filtro-@Id" class="select-filtro" @onchange="OnChange">
+        @if (GetOptions() is { } opts && opts.Any())
+        {
+            <option value="">-- Seleccionar --</option>
+            @foreach (var opt in opts)
+            {
+                <option value="@opt" selected="@IsSelected(opt)">@opt</option>
+            }
+        }
+        else
+        {
+            <option value="">(sin opciones)</option>
+        }
+    </select>
+</div>
+
+@code {
+    [Parameter]
+    public string Label { get; set; } = "Filtro";
+
+    [Parameter]
+    public Dictionary<string, List<string>> Lists { get; set; } = new Dictionary<string, List<string>>();
+
+    [Parameter]
+    public string? Selected { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> SelectedChanged { get; set; }
+
+    // Unique id to prevent collisions when multiple components en la misma página
+    private string Id { get; } = Guid.NewGuid().ToString("N");
+
+    IEnumerable<string>? GetOptions()
+    {
+        var key = Label?.Trim() ?? string.Empty;
+        if (string.IsNullOrEmpty(key)) return null;
+        return Lists != null && Lists.TryGetValue(key, out var list) ? list : null;
+    }
+
+    bool IsSelected(string option) => string.Equals(option, Selected, StringComparison.Ordinal);
+
+    async Task OnChange(ChangeEventArgs e)
+    {
+        Selected = e.Value?.ToString();
+        await SelectedChanged.InvokeAsync(Selected);
+    }
+}
+

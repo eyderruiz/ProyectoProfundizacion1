@@ -1,1 +1,114 @@
+/* Styles for TarjetaDeOrdenes component - palette: #28a2b2, #44becc, #7fd8e1, #b4e9ed */
+.tarjeta-ordenes {
+    background: #ffffff;
+    border: 4px solid transparent;
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 8px 22px rgba(36, 106, 122, 0.06);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.08s ease;
+}
 
+/* Hover: change border color to accent */
+.tarjeta-ordenes:hover {
+    border-color: #7fd8e1;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(36, 106, 122, 0.08);
+}
+
+.tarjeta-ordenes .header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* reducir espacio entre título y estado */
+}
+
+.tarjeta-ordenes .titulo {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800; /* título en negrilla */
+    color: #28a2b2; /* primary */
+}
+
+.tarjeta-ordenes .estado {
+    margin: 0;
+    font-size: 13px;
+    color: #44becc; /* secondary */
+    font-weight: 600;
+}
+
+.tarjeta-ordenes .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* reducir gap */
+    margin-top: 6px;
+    color: #243a3b;
+}
+
+.tarjeta-ordenes .descripcion {
+    margin-top: 6px;
+    color: #243a3b;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.tarjeta-ordenes .reporter {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #243a3b;
+}
+
+/* Priority badge styles - use palette */
+.priority-alert { margin-bottom: 6px; }
+.priority-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13px;
+}
+.priority-badge .badge-icon { font-size: 14px; }
+.priority-badge .badge-label { opacity: 0.9; margin-left: 4px; font-weight: 700; }
+.priority-badge .badge-text { margin-left: 6px; }
+
+/* Priority-specific colors using provided palette */
+.priority-alta .priority-badge { background: rgba(40,162,178,0.14); color: #28a2b2; border: 1px solid rgba(40,162,178,0.22); }
+.priority-media .priority-badge { background: rgba(68,190,204,0.12); color: #44becc; border: 1px solid rgba(68,190,204,0.16); }
+.priority-baja .priority-badge { background: rgba(127,216,225,0.12); color: #7fd8e1; border: 1px solid rgba(127,216,225,0.14); }
+
+/* Actions buttons with icons - rounded background that uses palette */
+.acciones {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.acciones button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.btn-editar { background: linear-gradient(90deg,#b4e9ed,#7fd8e1); color: #0f3d3f; border-color: rgba(36,106,122,0.06); }
+.btn-eliminar { background: linear-gradient(90deg,#ffd6d6,#ffb3b3); color: #7a1f1f; border-color: rgba(36,106,122,0.06); }
+
+.acciones .btn-icon { font-size: 14px; display:inline-block; }
+
+/* Ensure the component looks good in grid cells */
+:host {
+    display: block;
+}
+
+@media (max-width: 700px) {
+    .tarjeta-ordenes { padding: 8px; }
+}

@@ -1,1 +1,65 @@
+/* Estilos para ListaDeFiltros (componente)
+   - Contenedor con box-shadow
+   - Select estilizado
+   - Opciones con color principal #28a2b2
+*/
 
+.lista-filtros {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 6px; /* más compacto */
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(40, 162, 178, 0.06);
+    border: 1px solid rgba(36, 106, 122, 0.05);
+    box-sizing: border-box;
+    align-items: stretch;
+    /* Allow the filter to expand to fill its flex container */
+    flex: 1 1 200px;
+    width: 100%;
+}
+
+.lista-filtros label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #243a3b;
+    margin-bottom: 2px;
+}
+
+.select-filtro {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    padding: 6px 8px; /* más compacto */
+    border-radius: 6px;
+    border: 1px solid #d6eef1;
+    background: linear-gradient(180deg, #ffffff, #f7feff);
+    color: #0f3d3f;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+    transition: border-color 0.14s ease, box-shadow 0.14s ease;
+    height: 32px;
+}
+
+.select-filtro:focus {
+    outline: none;
+    border-color: #28a2b2;
+    box-shadow: 0 0 0 6px rgba(40,162,178,0.06);
+}
+
+/* Navegadores limitan el estilo de <option>, pero color suele aplicarse */
+.select-filtro option {
+    color: #28a2b2;
+    background: #ffffff;
+    font-weight: 600;
+}
+
+/* Pequeños ajustes responsivos */
+@media (max-width: 480px) {
+    .lista-filtros { width: 100%; padding: 6px; }
+    .select-filtro { padding: 6px 8px; font-size: 13px; height: 36px; }
+}

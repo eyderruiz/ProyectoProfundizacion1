@@ -1,12 +1,13 @@
 ﻿
 @page "/ordenes"
+@using PjrProject.Components.Pages.Mantenimiento.componente_mantenimiento
 
-@* Contenedor con título al inicio y botón al final *@
-<div class="header-container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;">
-    <h2 style="margin:0">Órdenes - Métricas</h2>
-
-    @* Usar componente BotonPro existente *@
-    <BotonPro Texto="Nuevo" OnClick="AddNew" />
+@* Contenedor header: botón alineado al final (derecha) *@
+<div class="header-container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;">   
+    @* Usar componente BotonPro existente, alineado al final por flex-end *@
+    @* El botón "Nuevo" puede tener un evento OnClick para agregar una nueva orden *@
+    <H2Pro Centrado="true" Texto="Ordenes de mantenimiento" />
+    <BotonPro Texto="Agregar orden" OnClick="AddNew" />
 </div>
 
 
@@ -18,14 +19,21 @@
         <TarjetasMetricas Title="Órdenes hoy" Value="87" IconName="orders" />
 
         <TarjetasMetricas Title="Tiempo promedio" Value="2.4h" IconName="clock" />
+
+        <TarjetasMetricas Title="Tareas pendientes" Value="15" IconName="bell" />
+
+        <TarjetasMetricas Title="SLA cumplimiento" Value="92%" IconName="chart" />
     </div>
 </div>
 
 @* Contenedor para filtros/listas (similar a tarjetas-card pero más delgado) *@
 <div class="contenedor-listasfiltros">
-    <div class="block">
-        @* Área reservada para botones/filtros futuros *@
-        <!-- botones filtros vendrán aquí -->
+    <div class="block" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        @* Lista de filtros: Label se usa como llave para rellenar las opciones desde `lists` *@
+        <ListaDeFiltros Label="Estado" Lists="lists" Selected="@selectedEstado" SelectedChanged="@(v => selectedEstado = v)" />
+        <ListaDeFiltros Label="Prioridad" Lists="lists" Selected="@selectedPrioridad" SelectedChanged="@(v => selectedPrioridad = v)" />
+        <ListaDeFiltros Label="Tipo" Lists="lists" Selected="@selectedTipo" SelectedChanged="@(v => selectedTipo = v)" />
+        <ListaDeFiltros Label="Departamento" Lists="lists" Selected="@selectedDepartamento" SelectedChanged="@(v => selectedDepartamento = v)" />
     </div>
 </div>
 
@@ -34,13 +42,54 @@
     <div class="block">
         @* Contenido de órdenes (tabla, listados) irá aquí *@
         <!-- ordenes contenido principal -->
+        <div class="ordenes-compact">
+            <TarjetaDeOrdenes Title="Reparación motor" Status="Abierta" Location="Planta 1" MaintenanceType="Correctivo"
+                              Description="Revisión y reparación del motor principal." Reporter="Juan Pérez" Date="@DateTime.Now.AddDays(-1)"
+                              Priority="Alta" OnViewDetails="@(id => ViewDetails(id))" OnAssign="@(id => Assign(id))" />
+
+            <TarjetaDeOrdenes Title="Cambio filtro" Status="En Proceso" Location="Almacén" MaintenanceType="Preventivo"
+                              Description="Cambio de filtro de aire en compresor." Reporter="María Gómez" Date="@DateTime.Now.AddHours(-5)"
+                              Priority="Media" OnViewDetails="@(id => ViewDetails(id))" OnAssign="@(id => Assign(id))" />
+
+            <TarjetaDeOrdenes Title="Inspección eléctrica" Status="Pendiente" Location="Planta 2" MaintenanceType="Predictivo"
+                              Description="Inspección de tableros y cableado." Reporter="Carlos Ruiz" Date="@DateTime.Now.AddDays(-2)"
+                              Priority="Alta" OnViewDetails="@(id => ViewDetails(id))" OnAssign="@(id => Assign(id))" />
+
+            <TarjetaDeOrdenes Title="Lubricación bomba" Status="Cerrada" Location="Sector B" MaintenanceType="Preventivo"
+                              Description="Lubricación de rodamientos bomba hidráulica." Reporter="Ana Torres" Date="@DateTime.Now.AddDays(-7)"
+                              Priority="Baja" OnViewDetails="@(id => ViewDetails(id))" OnAssign="@(id => Assign(id))" />
+        </div>
     </div>
 </div>
 
 @code {
+    // Listas de ejemplo para los filtros (Label se usa como key)
+    private Dictionary<string, List<string>> lists = new()
+    {
+        ["Estado"] = new List<string> { "Abierta", "En Proceso", "Cerrada" },
+        ["Prioridad"] = new List<string> { "Alta", "Media", "Baja" },
+        ["Tipo"] = new List<string> { "Correctivo", "Preventivo", "Predictivo" },
+        ["Departamento"] = new List<string> { "Mantenimiento", "Operaciones", "Calidad" }
+    };
+
+    private string? selectedEstado;
+    private string? selectedPrioridad;
+    private string? selectedTipo;
+    private string? selectedDepartamento;
+
     void AddNew()
     {
         // Acción al presionar el botón. Puedes reemplazar con la lógica real.
+    }
+
+    void ViewDetails(string id)
+    {
+        // lógica de ver detalle
+    }
+
+    void Assign(string id)
+    {
+        // lógica de asignar
     }
 }
 

@@ -5,18 +5,17 @@
 .tarjeta-metrica {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     background: #ffffff;
-    border: 2px solid transparent; /* sin borde visible por defecto */
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    padding: 10px;
-    border-radius: 8px;
-    width: 160px !important; /* tamaño pequeño por defecto */
+    border: 3px solid transparent; /* sin borde visible por defecto */
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+    padding: 14px;
+    border-radius: 10px;
     box-sizing: border-box;
-    min-width: 160px !important;
-    min-height: 72px; /* asegurar altura mínima consistente */
-    flex: 0 0 160px !important; /* fijar tamaño dentro del grid para que todas sean iguales */
-    align-self: stretch !important;
+    /* allow cards to grow and fill the parent .tarjetas-grid */
+    flex: 1 1 0%;
+    min-width: 140px;
+    min-height: 96px; /* mayor altura para verse más grandes */
     transition: border-color 0.18s ease, transform 0.08s ease;
 }
 
@@ -27,8 +26,8 @@
 }
 
 .tarjeta-metrica .icono svg {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
 }
 
 /* Forzar color del icono aunque venga desde contenido hijo (named RenderFragment).
@@ -39,41 +38,35 @@
 
 .tarjeta-metrica .contenido h4 {
     margin: 0;
-    font-size: 13px;
-    font-weight: 700; /* negrilla */
+    font-size: 15px;
+    font-weight: 800; /* negrilla */
     color: #243a3b;
 }
 
 .tarjeta-metrica .contenido .valor {
-    margin: 2px 0 0 0;
-    font-size: 15px;
-    font-weight: 700; /* negrilla para el número */
+    margin: 4px 0 0 0;
+    font-size: 20px;
+    font-weight: 800; /* negrilla para el número */
     color: #0f3d3f;
 }
 
-/* Ensure metric cards inside the grid keep consistent sizing */
-.tarjetas-grid .tarjeta-metrica,
-.tarjetas-card .tarjeta-metrica {
-    flex: 0 0 160px !important;
-    width: 160px !important;
-    min-width: 160px !important;
-}
+/* Remove fixed sizing rules so cards can expand to fill the grid container. */
 
 /* Ajustes responsivos para pantallas muy pequeñas */
 @media (max-width: 360px) {
     .tarjeta-metrica {
-        width: 140px;
-        padding: 8px;
+        flex: 1 1 100%;
+        padding: 10px;
         gap: 8px;
     }
 
     .tarjeta-metrica .icono svg {
-        width: 22px;
-        height: 22px;
+        width: 28px;
+        height: 28px;
     }
 
-    .tarjeta-metrica .contenido h4 { font-size: 12px; }
-    .tarjeta-metrica .contenido .valor { font-size: 14px; }
+    .tarjeta-metrica .contenido h4 { font-size: 14px; }
+    .tarjeta-metrica .contenido .valor { font-size: 18px; }
 }
 
 /* Hover / active: cambiar borde al color solicitado */
